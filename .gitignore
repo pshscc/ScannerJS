@@ -1,2 +1,4 @@
 out/
-Scanner.js
+node_modules/
+scanner.js
+tests/

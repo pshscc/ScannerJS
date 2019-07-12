@@ -1,0 +1,25 @@
+{
+  "name": "scannerjs",
+  "version": "1.0.0",
+  "description": "This was created to mimic the [Scanner](https://docs.oracle.com/javase/10/docs/api/java/util/Scanner.html) class in Java and be used in PSHS's annual coding scimmage for beginners.",
+  "main": "scanner.js",
+  "scripts": {
+    "compile": "tsc",
+    "doc": "jsdoc scanner.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pshscc/ScannerJS.git"
+  },
+  "author": "minidomo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pshscc/ScannerJS/issues"
+  },
+  "homepage": "https://github.com/pshscc/ScannerJS#readme",
+  "devDependencies": {
+    "jsdoc": "^3.6.2",
+    "mocha": "^6.1.4",
+    "typescript": "^3.5.3"
+  }
+}

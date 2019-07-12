@@ -15,7 +15,7 @@
  * @public
  * @throws {TypeError} Will throw an error if the given source is not of type Array.&ltstring&gt or string
  */
-const createScanner = (source: string | string[]) => {
+const scanner = (source: string | string[]) => {
     const NUMBER_REGEX = /^(\+|-)?\d+((\.\d+)?(e(\+|-)\d+)?)?$|^(\+|-)?\.\d+(e(\+|-)\d+)?$/i;
     let buffer: string[];
     let bufferPointer: number = 0;
@@ -95,7 +95,7 @@ const createScanner = (source: string | string[]) => {
      * @private
      */
     const read = (): string | null => {
-        if (!buffer.length) // prevent crashing when a method is called from a Scanner that is instantiated with an empty array e.g. createScanner([]).next()
+        if (!buffer.length) // prevent crashing when a method is called from a Scanner that is instantiated with an empty array e.g. scanner([]).next()
             return null;
         let EOF: boolean = bufferIndex === buffer.length - 1 && bufferPointer === buffer[bufferIndex].length;
         while (bufferPointer < 0) { // bufferPointer can be negative due to the subtraction in `nextNumber(retainElement)` and `next()`
@@ -156,13 +156,13 @@ const createScanner = (source: string | string[]) => {
          * // hello 1
          * // happy birthday
          * // incorrect example using the same input as above
-         * var input = createScanner(System.in);
+         * var input = scanner(System.in);
          * var word = input.next(); // has the value "hello"
          * var value = input.nextNumber(); // will have the value 1
          * var line = input.nextLine(); // has the value of an empty string ("")
          * 
          * // correct example
-         * var input = createScanner(System.in);
+         * var input = scanner(System.in);
          * var word = input.next(); // has the value "hello"
          * var value = input.nextNumber(); // has the the value 1
          * input.nextLine() // flushes the buffer (removes the newline character "\n")
@@ -228,3 +228,5 @@ const createScanner = (source: string | string[]) => {
         }
     };
 };
+
+export = scanner;

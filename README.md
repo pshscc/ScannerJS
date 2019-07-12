@@ -3,19 +3,21 @@ This was created to mimic the [Scanner](https://docs.oracle.com/javase/10/docs/a
 
 ## Prequisites
 - [Node.js](https://nodejs.org/en/)
-- [TypeScript](https://www.typescriptlang.org/index.html#download-links)
-## Optional
-- [JSDoc](https://github.com/jsdoc/jsdoc#installation-and-usage) - For producing documentation files
 
 ## Building
-To obtain this repository, enter the following in command prompt:
+To build this repository, enter the following in command prompt:
 ```shell
 git clone https://github.com/pshscc/ScannerJS.git
 cd ScannerJS
+npm install
 ```
 
-To compile `Scanner.ts`, enter the following in command prompt:
+## Scripts
+To run these scripts, enter the following in command prompt: 
 ```shell
-tsc
+npm run <name of script>
 ```
-
+| Name | Description |
+| :-: | - |
+| `compile` | Compiles `scanner.ts` and generates `scanner.js` |
+| `doc` | Produces documention for `scanner.js`. <br> *Note: `scanner.js` must exist prior to running this script.*|
