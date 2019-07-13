@@ -20,4 +20,5 @@ npm run <name of script>
 | Name | Description |
 | :-: | - |
 | `compile` | Compiles `scanner.ts` and generates `scanner.js` |
-| `doc` | Produces documention for `scanner.js`. <br> *Note: `scanner.js` must exist prior to running this script.*|
+| `doc` | Produces documention for `scanner.js`. |
+| `test` | Runs the tests for `scanner.js` |

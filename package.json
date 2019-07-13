@@ -5,7 +5,8 @@
   "main": "scanner.js",
   "scripts": {
     "compile": "tsc",
-    "doc": "jsdoc scanner.js"
+    "doc": "jsdoc scanner.js",
+    "test": "mocha tests/runner.js --reporter=progress"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/pshscc/ScannerJS#readme",
   "devDependencies": {
+    "chai": "^4.2.0",
     "jsdoc": "^3.6.2",
     "mocha": "^6.1.4",
     "typescript": "^3.5.3"
