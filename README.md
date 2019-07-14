@@ -19,6 +19,6 @@ npm run <name of script>
 ```
 | Name | Description |
 | :-: | - |
-| `compile` | Compiles `scanner.ts` and generates `scanner.js` |
+| `compile` | Compiles `scanner.ts` and generates `scanner.js`. |
 | `docs` | Produces documention for `scanner.js`. |
-| `tests` | Runs the tests for `scanner.js` |
+| `tests` | Runs the tests for `scanner.js`. |
