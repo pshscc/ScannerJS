@@ -1,4 +1,4 @@
-const { assert, expect } = require('chai');
+const { assert } = require('chai');
 const scanner = require('../../scanner');
 
 describe('Scanner', function () {
@@ -38,30 +38,36 @@ describe('Scanner', function () {
             const val = sc.hasNextNumber();
             assert.strictEqual(val, true);
         });
-        it(`should return true when it is in ${/\d+\.\d+e\+\d+/}`, function () {
+        it(`should return true when it is in ${/\d+\.\d+e\+\d+/i}`, function () {
             const sc = scanner('1.2e+2');
             const val = sc.hasNextNumber();
             assert.strictEqual(val, true);
         });
-        it(`should return true when it is in ${/\d+\.\d+E\+\d+/}`, function () {
+        it(`should return true when it is in ${/\d+\.\d+E\+\d+/i}`, function () {
             const sc = scanner('1.2E+2');
             const val = sc.hasNextNumber();
             assert.strictEqual(val, true);
         });
-        it(`should return true when it is in ${/\d+\.\d+e-\d+/}`, function () {
+        it(`should return true when it is in ${/\d+\.\d+e-\d+/i}`, function () {
             const sc = scanner('1.2e-2');
             const val = sc.hasNextNumber();
             assert.strictEqual(val, true);
         });
-        it(`should return true when it is in ${/\.\d+e-\d+/}`, function () {
+        it(`should return true when it is in ${/\.\d+e-\d+/i}`, function () {
             const sc = scanner('.2e-2');
             const val = sc.hasNextNumber();
             assert.strictEqual(val, true);
         });
-        it(`should return true when it is in ${/\.\d+e\+\d+/}`, function () {
+        it(`should return true when it is in ${/\.\d+e\+\d+/i}`, function () {
             const sc = scanner('.2e+2');
             const val = sc.hasNextNumber();
             assert.strictEqual(val, true);
+        });
+        it('should return same value if consecutive calls', function () {
+            const sc = scanner('1');
+            const expected = sc.hasNextNumber();
+            const actual = sc.hasNextNumber();
+            assert.strictEqual(actual, expected);
         });
     });
 });

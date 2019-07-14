@@ -1,4 +1,4 @@
-const { assert, expect } = require('chai');
+const { assert } = require('chai');
 const scanner = require('../../scanner');
 
 describe('Scanner', function () {

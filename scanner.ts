@@ -20,16 +20,14 @@ const scanner = (source: string | string[]) => {
     let buffer: string[];
     let bufferPointer: number = 0;
     let bufferIndex: number = 0;
-    let next_number: number | undefined;
-    let next_element: string | null | undefined;
-    let next_line: string | null | undefined;
 
     if (typeof source === 'string') {
         buffer = [source];
     } else if (typeof source === 'object' && source.constructor === Array) {
+        // doesnt truly check if the array is entirely strings due to possible decrease in performance
         buffer = source.slice();
     } else {
-        throw new TypeError('Input must be a string or an Array.<string> ');
+        throw new TypeError('Input must be a string or an Array.<string>');
     }
 
     /**
@@ -38,11 +36,6 @@ const scanner = (source: string | string[]) => {
      * @private
      */
     const next = (): { value: string | null, charactersRead: number } => {
-        if (typeof next_element === 'string') {
-            const copy: string = next_element;
-            next_element = undefined;
-            return { value: copy, charactersRead: 0 };
-        }
         let res: string = '', count: number = 0, cur: string | null;
         do {
             cur = read();
@@ -65,6 +58,32 @@ const scanner = (source: string | string[]) => {
     }
 
     /**
+     * Returns an object with a value that represents the next line in the buffer separated by whitespace or null if the buffer is empty and the number of characters read during the call
+     * @returns {{value: ?string, charactersRead: number}} an object with a value that represents the next line in the buffer separated by a new line or null if the buffer is empty and the number of characters read during the call
+     * @private
+     */
+    const nextLine = (): { value: string | null, charactersRead: number } => {
+        let res: string = '', count: number = 1, cur: string | null = read();
+        while (cur && cur !== '\r' && cur !== '\n') { // account for new line endings of '\r\n' and '\n'
+            res += cur;
+            cur = read();
+            count++;
+        }
+        if (cur === '\r') {
+            count++;
+            cur = read(); // get the '\n' that follows '\r'
+        }
+        if (cur === null)
+            count--; // decrease by 1 due to a value of null meaning EOF which does not count as a character read
+        if (res === '') {
+            // an empty line should return an empty string ('')
+            // return null only happens when buffer reached EOF
+            return { value: cur === '\n' ? res : null, charactersRead: count };
+        }
+        return { value: res, charactersRead: count };
+    };
+
+    /**
      * Obtains the next non-whitespace element separated by whitespace in the buffer as a number
      * @param {boolean} retainElement determines whether the value received from next is to be considered in the buffer
      * @returns {number} the next element in the buffer as a number
@@ -72,21 +91,13 @@ const scanner = (source: string | string[]) => {
      * @throws {TypeError} Will throw an error if the next element is not a number
      */
     const nextNumber = (retainElement: boolean): number => {
-        if (typeof next_number === 'number') {
-            const copy: number = next_number;
-            next_number = undefined;
-            return copy;
-        }
         const res = next();
+        if (retainElement)
+            bufferPointer -= res.charactersRead; // reset position of buffer due to only check if a number exists in hasNextNumber()
         if (typeof res.value === 'string' && NUMBER_REGEX.test(res.value))  // integer/double regex
             return parseFloat(res.value);
-        else {
-            // used for hasNextNumber() and the next element is not a number, then keep it considered in the buffer in case
-            // next() is called by the user
-            if (retainElement)
-                bufferPointer -= res.charactersRead;
+        else
             throw new TypeError('Not a number');
-        }
     };
 
     /**
@@ -135,16 +146,9 @@ const scanner = (source: string | string[]) => {
          * @public
          */
         hasNext(): boolean {
-            // consecutive calls to hasNext() without calling next() should return true if next_element is a string
-            if (typeof next_element === 'string')
-                return true;
             const obj = next();
-            next_element = obj.value;
-            if (typeof next_element === 'string')
-                return true;
-            // if no non-whitespace characters are found then reset the position of the bufferPointer to prevent interference with nextLine()
-            bufferPointer -= obj.charactersRead;
-            return false;
+            bufferPointer -= obj.charactersRead; // reset position of buffer due to only checking if it exists
+            return typeof obj.value === 'string';
         },
         /**
          * Obtains the remaining parts of a line. If {@link next} or {@link nextNumber} is used to capture the last element of a line,
@@ -169,24 +173,7 @@ const scanner = (source: string | string[]) => {
          * var line = input.nextLine(); // correctly gets the next line (has the value "happy birthday")
          */
         nextLine(): string | null {
-            if (typeof next_line === 'string') {
-                const copy: string = next_line;
-                next_line = undefined;
-                return copy;
-            }
-            let res: string = '', cur: string | null = read();
-            while (cur && cur !== '\r' && cur !== '\n') { // account for new line endings of '\r\n' and '\n'
-                res += cur;
-                cur = read();
-            }
-            if (cur === '\r')
-                cur = read(); // get the '\n' that follows '\r'
-            if (res === '') {
-                // an empty line should return an empty string ('')
-                // return null only happens when buffer reached EOF
-                return cur === '\n' ? res : null;
-            }
-            return res;
+            return nextLine().value;
         },
         /**
          * Determines whether there are lines available in the buffer
@@ -194,11 +181,9 @@ const scanner = (source: string | string[]) => {
          * @public
          */
         hasNextLine(): boolean {
-            // conserve the next_line for consecutive calls to hasNextLine() without using nextLine()
-            if (typeof next_line === 'string')
-                return true;
-            next_line = this.nextLine();
-            return typeof next_line === 'string';
+            const obj = nextLine();
+            bufferPointer -= obj.charactersRead; // reset position of buffer due to only checking if it exists
+            return typeof obj.value === 'string';
         },
         /**
          * Obtains the next non-whitespace element separated by whitespace in the buffer as a number
@@ -215,12 +200,8 @@ const scanner = (source: string | string[]) => {
          * @public
          */
         hasNextNumber(): boolean {
-            // if hasNextNumber is called more than once consecutively without using nextNumber() then return true if next_number is a number
-            // to prevent skipping a number
-            if (typeof next_number === 'number')
-                return true;
             try {
-                next_number = nextNumber(true);
+                nextNumber(true);
                 return true;
             } catch (err) {
                 return false;
