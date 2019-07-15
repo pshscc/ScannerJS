@@ -9,7 +9,7 @@
  */
 
 /**
- * A Java-like Scanner that takes in a source to parse
+ * Returns a Java-like [Scanner](https://docs.oracle.com/javase/10/docs/api/java/util/Scanner.html) that uses a source to parse
  * @param {string[]|string} source the source to parse
  * @returns {Scanner} the Scanner object
  * @public

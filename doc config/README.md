@@ -1,0 +1,1 @@
+This is documentation for [ScannerJS](https://github.com/pshscc/ScannerJS).

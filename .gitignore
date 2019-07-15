@@ -1,4 +1,4 @@
-out/
+doc/
 node_modules/
 scanner.js
 !tests/methods/scanner.js
