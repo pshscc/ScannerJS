@@ -22,3 +22,6 @@ npm run <name of script>
 | `compile` | Compiles `scanner.ts` and generates `scanner.js`. |
 | `docs` | Produces documention for `scanner.js`. |
 | `tests` | Runs the tests for `scanner.js`. |
+
+## Documentation
+All documentation is located in the generated `./doc` folder and can also be found [here](https://pshscc.github.io/scannerjs/).

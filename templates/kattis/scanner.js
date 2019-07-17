@@ -23,7 +23,7 @@ const scanner = (source) => {
     if (typeof source === 'string') {
         buffer = [source];
     }
-    else if (typeof source === 'object' && source.constructor === Array) {
+    else if (Array.isArray(source)) {
         // doesnt truly check if the array is entirely strings due to possible decrease in performance
         buffer = source.slice();
     }
