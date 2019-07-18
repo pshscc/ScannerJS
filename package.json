@@ -5,8 +5,8 @@
   "main": "scanner.js",
   "scripts": {
     "compile": "tsc",
-    "docs": "jsdoc scanner.js -c \"./doc config/conf.json\"",
-    "tests": "mocha tests/runner.js --reporter=progress"
+    "doc": "jsdoc scanner.js -c \"./doc config/conf.json\"",
+    "test": "mocha tests/runner.js --reporter=progress"
   },
   "repository": {
     "type": "git",
