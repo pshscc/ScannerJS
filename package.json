@@ -5,6 +5,7 @@
   "main": "scanner.js",
   "scripts": {
     "compile": "tsc",
+    "compile:rc": "tsc --removeComments",
     "doc": "jsdoc scanner.js -c \"./doc config/conf.json\"",
     "test": "mocha tests/runner.js --reporter=progress"
   },
@@ -12,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/pshscc/ScannerJS.git"
   },
-  "author": "minidomo",
+  "author": "JB Ladera (https://github.com/MiniDomo)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/pshscc/ScannerJS/issues"

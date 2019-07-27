@@ -20,6 +20,7 @@ npm run <name of script>
 | Name | Description |
 | :-: | - |
 | `compile` | Compiles `scanner.ts` and generates `scanner.js`. |
+| `compile:rc` | Compiles `scanner.ts` and generates `scanner.js` with no comments. |
 | `doc` | Produces documention for `scanner.js`. |
 | `test` | Runs the tests for `scanner.js`. |
 
