@@ -1,9 +1,49 @@
 {
+    "tags": {
+        "allowUnknownTags": true
+    },
     "plugins": [
         "plugins/markdown"
     ],
+    "source": {
+        "include": [
+            "./doc config/README.md"
+        ]
+    },
     "opts": {
-        "readme": "./doc config/README.md",
+        "template": "node_modules/docdash",
         "destination": "./doc"
+    },
+    "markdown": {
+        "parser": "gfm",
+        "idInHeadings": true
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "includeDate": false,
+            "useLongnameInNav": true
+        }
+    },
+    "docdash": {
+        "meta": {
+            "title": "ScannerJS",
+            "description": "Documentation for ScannerJS"
+        },
+        "openGraph": {
+            "title": "ScannerJS",
+            "type": "website",
+            "image": "https://avatars3.githubusercontent.com/u/52810793?s=400&v=4",
+            "site_name": "ScannerJS",
+            "url": "https://pshscc.github.io/scannerjs/"
+        },
+        "typedefs": true,
+        "menu": {
+            "Github repo": {
+                "href": "https://github.com/pshscc/ScannerJS",
+                "id": "repository"
+            }
+        }
     }
 }
