@@ -13,7 +13,7 @@
  * @param {string[]|string} source the source to parse
  * @returns {Scanner} the Scanner object
  * @public
- * @throws {TypeError} Will throw an error if the given source is not of type Array.<string> or string
+ * @throws {TypeError} Will throw an error if the given source is not of type Array.&lt;string&gt; or string
  */
 const scanner = (source: string | string[]) => {
     const NUMBER_REGEX = /^(\+|-)?\d+((\.\d+)?(e(\+|-)\d+)?)?$|^(\+|-)?\.\d+(e(\+|-)\d+)?$/i;
@@ -24,7 +24,7 @@ const scanner = (source: string | string[]) => {
     if (typeof source === 'string') {
         buffer = [source];
     } else if (Array.isArray(source)) {
-        // doesnt truly check if the array is entirely strings due to possible decrease in performance
+        // doesn't truly check if the array is entirely strings due to possible decrease in performance
         buffer = source.slice();
     } else {
         throw new TypeError('Input must be a string or an Array.<string>');
@@ -159,13 +159,13 @@ const scanner = (source: string | string[]) => {
          * // input simulation where `System.in` contains the following:
          * // hello 1
          * // happy birthday
-         * // incorrect example using the same input as above
+         * // incorrect way using the same input as above
          * var input = scanner(System.in);
          * var word = input.next(); // has the value "hello"
          * var value = input.nextNumber(); // will have the value 1
          * var line = input.nextLine(); // has the value of an empty string ("")
          * 
-         * // correct example
+         * // correct way
          * var input = scanner(System.in);
          * var word = input.next(); // has the value "hello"
          * var value = input.nextNumber(); // has the the value 1
