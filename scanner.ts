@@ -36,7 +36,7 @@ const scanner = (source: string | string[]) => {
      * @private
      */
     const next = (): { value: string | null, charactersRead: number } => {
-        let res: string = '', count: number = 0, cur: string | null;
+        let res = '', count = 0, cur: string | null;
         do {
             cur = read();
             count++;
@@ -63,7 +63,7 @@ const scanner = (source: string | string[]) => {
      * @private
      */
     const nextLine = (): { value: string | null, charactersRead: number } => {
-        let res: string = '', count: number = 1, cur: string | null = read();
+        let res = '', count = 1, cur: string | null = read();
         while (cur && cur !== '\r' && cur !== '\n') { // account for new line endings of '\r\n' and '\n'
             res += cur;
             cur = read();
@@ -108,7 +108,7 @@ const scanner = (source: string | string[]) => {
     const read = (): string | null => {
         if (!buffer.length) // prevent crashing when a method is called from a Scanner that is instantiated with an empty array e.g. scanner([]).next()
             return null;
-        let EOF: boolean = bufferIndex === buffer.length - 1 && bufferPointer === buffer[bufferIndex].length;
+        let EOF = bufferIndex === buffer.length - 1 && bufferPointer === buffer[bufferIndex].length;
         while (bufferPointer < 0) { // bufferPointer can be negative due to the subtraction in `nextNumber(retainElement)` and `next()`
             bufferIndex--;
             bufferPointer += buffer[bufferIndex].length;
