@@ -14,7 +14,7 @@
     "url": "git+https://github.com/pshscc/ScannerJS.git"
   },
   "author": "JB Ladera (https://github.com/MiniDomo)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/pshscc/ScannerJS/issues"
   },
