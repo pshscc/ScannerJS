@@ -1,4 +1,4 @@
-Documentation for [ScannerJS](https://github.com/pshscc/ScannerJS).
+Documentation for [ScannerJS](https://github.com/pshscc/scannerjs).
 
 ## Examples
 **Note: These examples utilize Node.js functionalities.**  
@@ -34,10 +34,10 @@ stream.on('end', () => {
 ```
 
 ## Remarks
-[ScannerJS](https://github.com/pshscc/ScannerJS) is designed to model basic functionality of the [Scanner](https://docs.oracle.com/javase/10/docs/api/java/util/Scanner.html) class in Java and be used in PSHS's annual coding scimmage for beginners. Use [ScannerJS](https://github.com/pshscc/ScannerJS) to parse strings or arrays of strings.  
+[ScannerJS](https://github.com/pshscc/scannerjs) is designed to model basic functionality of the [Scanner](https://docs.oracle.com/javase/10/docs/api/java/util/Scanner.html) class in Java and be used in PSHS's annual coding scimmage for beginners. Use [ScannerJS](https://github.com/pshscc/ScannerJS) to parse strings or arrays of strings.  
 For a list of methods, see [Global](./global.html).
 
 ## Templates
-Templates designed for competitive programming utilizing [ScannerJS](https://github.com/pshscc/ScannerJS).  
+Templates designed for competitive programming utilizing [ScannerJS](https://github.com/pshscc/scannerjs).  
 - [Kattis](https://github.com/pshscc/ScannerJS/tree/master/templates/kattis)
 - [HackerRank](https://github.com/pshscc/ScannerJS/tree/master/templates/hackerrank)
