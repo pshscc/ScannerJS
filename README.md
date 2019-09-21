@@ -7,8 +7,8 @@ This was created to replicate basic functionality of the [Scanner](https://docs.
 ## Building
 To build this repository, enter the following in command prompt:
 ```shell
-git clone https://github.com/pshscc/ScannerJS.git
-cd ScannerJS
+git clone https://github.com/pshscc/scannerjs.git
+cd scannerjs
 npm install
 ```
 
