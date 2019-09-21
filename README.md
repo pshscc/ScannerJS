@@ -3,6 +3,7 @@ This was created to replicate basic functionality of the [Scanner](https://docs.
 
 ## Prequisites
 - [Node.js](https://nodejs.org/en/)
+- [TypeScript](https://www.typescriptlang.org/index.html)
 
 ## Building
 To build this repository, enter the following in command prompt:

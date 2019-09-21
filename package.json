@@ -11,19 +11,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pshscc/ScannerJS.git"
+    "url": "git+https://github.com/pshscc/scannerjs.git"
   },
   "author": "JB Ladera (https://github.com/MiniDomo)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pshscc/ScannerJS/issues"
+    "url": "https://github.com/pshscc/scannerjs/issues"
   },
-  "homepage": "https://github.com/pshscc/ScannerJS#readme",
+  "homepage": "https://github.com/pshscc/scannerjs#readme",
   "devDependencies": {
     "chai": "^4.2.0",
     "docdash": "^1.1.1",
     "jsdoc": "~3.6.3",
     "mocha": "^6.2.0",
-    "typescript": "^3.5.3"
-  }
+    "typescript": "^3.6.3"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {}
 }
