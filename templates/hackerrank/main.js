@@ -25,6 +25,7 @@ const print = args => process.stdout.write(`${args}`);
 const println = (args = '') => process.stdout.write(`${args}\n`);
 
 const main = () => {
+    let input = scanner(stdin);
     // code
 };
 

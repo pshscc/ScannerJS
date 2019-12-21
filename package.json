@@ -24,7 +24,7 @@
     "docdash": "^1.1.1",
     "jsdoc": "~3.6.3",
     "mocha": "^6.2.2",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   },
   "directories": {
     "test": "tests"
