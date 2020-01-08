@@ -1,11 +1,18 @@
 "use strict";
 
+const print = args => process.stdout.write(`${args}`);
+const println = (args = '') => process.stdout.write(`${args}\n`);
+
+const main = () => {
+    let input = scanner(stdin);
+    // code
+};
+
 let stdin = [];
 init: {
     const EXIT = err => {
         if (err instanceof Error) {
-            process.stderr.write(err);
-            process.stderr.write('\n');
+            process.stderr.write(`${err.name}\n${err.message}\n${err.stack || ''}`);
         } else {
             main();
         }
@@ -21,13 +28,6 @@ init: {
     process.on('SIGINT', EXIT);
     process.on('uncaughtException', EXIT);
 }
-const print = args => process.stdout.write(`${args}`);
-const println = (args = '') => process.stdout.write(`${args}\n`);
-
-const main = () => {
-    let input = scanner(stdin);
-    // code
-};
 
 const scanner = (source) => {
     const NUMBER_REGEX = /^(\+|-)?\d+((\.\d+)?(e(\+|-)\d+)?)?$|^(\+|-)?\.\d+(e(\+|-)\d+)?$/i;
