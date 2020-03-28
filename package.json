@@ -22,8 +22,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "docdash": "^1.2.0",
-    "jsdoc": "~3.6.3",
-    "mocha": "^6.2.2",
+    "jsdoc": "^3.6.3",
+    "mocha": "^6.2.3",
     "typescript": "^3.8.3"
   },
   "directories": {
