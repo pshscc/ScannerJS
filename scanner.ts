@@ -17,119 +17,72 @@
  */
 const scanner = (source: string | string[]) => {
     const NUMBER_REGEX = /^(\+|-)?\d+((\.\d+)?(e(\+|-)\d+)?)?$|^(\+|-)?\.\d+(e(\+|-)\d+)?$/i;
-    let buffer: string[];
-    let bufferPointer: number = 0;
-    let bufferIndex: number = 0;
+    let buffer: string;
 
     if (typeof source === 'string') {
-        buffer = [source];
+        buffer = source;
     } else if (Array.isArray(source)) {
-        // doesn't truly check if the array is entirely strings due to possible decrease in performance
-        buffer = source.slice();
+        buffer = source.slice().join('');
     } else {
         throw new TypeError('Input must be a string or an Array.<string>');
     }
 
     /**
-     * Returns an object with a value that represents the next element in the buffer separated by whitespace or null if the buffer is empty and the number of characters read during the call
-     * @returns {{value: ?string, charactersRead: number}} an object with a value that represents the next element in the buffer separated by whitespace or null if the buffer is empty and the number of characters read during the call
+     * Returns a string that represents the next element in the buffer separated by whitespace or null if the buffer is empty
+     * @param {boolean} retainElement determines whether the value retrieved is to remain in the buffer
+     * @returns {?string} a string that represents the next element in the buffer separated by whitespace or null if the buffer is empty
      * @private
      */
-    const next = (): { value: string | null, charactersRead: number } => {
-        let res = '', count = 0, cur: string | null;
-        do {
-            cur = read();
-            count++;
-        } while (isWhitespace(cur));
-        while (cur && !isWhitespace(cur)) {
-            res += cur;
-            cur = read();
-            count++;
+    const next = (retainElement: boolean): string | null => {
+        if (!buffer)
+            return null;
+        const regex = /^\s*([^\s]+)/;
+        const ret = regex.exec(buffer);
+        if (ret) {
+            if (!retainElement)
+                buffer = buffer.replace(regex, '');
+            return ret[1];
         }
-        // last character read is conserved or is EOF and is not considered a character.
-        // Ensures count >= 0
-        count = Math.max(0, count - 1);
-        if (cur)
-            bufferPointer--; // conserve the last character since it's not apart of the returned value
-        else if (res === '') // should only happen when buffer reached EOF
-            // calling next() when it's EOF should return null when the buffer is empty
-            return { value: null, charactersRead: count };
-        return { value: res, charactersRead: count };
+        if (!retainElement)
+            buffer = '';
+        return ret;
     };
 
     /**
-     * Returns an object with a value that represents the next line in the buffer separated by whitespace or null if the buffer is empty and the number of characters read during the call
-     * @returns {{value: ?string, charactersRead: number}} an object with a value that represents the next line in the buffer separated by a new line or null if the buffer is empty and the number of characters read during the call
+     * Returns a string that represents the next line in the buffer separated by whitespace or null if the buffer is empty
+     * @param {boolean} retainElement determines whether the value retrieved is to remain in the buffer
+     * @returns {?string} a string that represents the next line in the buffer separated by whitespace or null if the buffer is empty
      * @private
      */
-    const nextLine = (): { value: string | null, charactersRead: number } => {
-        let res = '', count = 1, cur: string | null = read();
-        while (cur && cur !== '\r' && cur !== '\n') { // account for new line endings of '\r\n' and '\n'
-            res += cur;
-            cur = read();
-            count++;
+    const nextLine = (retainElement: boolean): string | null => {
+        if (!buffer)
+            return null;
+        const regex = /^([^\r\n]*)(?:\r\n|\n|$)/;
+        const ret = regex.exec(buffer);
+        if (ret) {
+            if (!retainElement)
+                buffer = buffer.replace(regex, '');
+            return ret[1];
         }
-        if (cur === '\r') {
-            count++;
-            cur = read(); // get the '\n' that follows '\r'
-        }
-        if (cur === null)
-            count--; // decrease by 1 due to a value of null meaning EOF which does not count as a character read
-        if (res === '') {
-            // an empty line should return an empty string ('')
-            // return null only happens when buffer reached EOF
-            return { value: cur === '\n' ? res : null, charactersRead: count };
-        }
-        return { value: res, charactersRead: count };
+        if (!retainElement)
+            buffer = '';
+        return null;
     };
 
     /**
      * Obtains the next non-whitespace element separated by whitespace in the buffer as a number
-     * @param {boolean} retainElement determines whether the value received from next is to be considered in the buffer
+     * @param {boolean} retainElement determines whether the value retrieved is to remain in the buffer
      * @returns {number} the next element in the buffer as a number
      * @private
      * @throws {TypeError} Will throw an error if the next element is not a number
      */
     const nextNumber = (retainElement: boolean): number => {
-        const res = next();
-        if (retainElement)
-            bufferPointer -= res.charactersRead; // reset position of buffer due to only check if a number exists in hasNextNumber()
-        if (typeof res.value === 'string' && NUMBER_REGEX.test(res.value))  // integer/double regex
-            return parseFloat(res.value);
+        const res = next(retainElement);
+        if (typeof res === 'string' && NUMBER_REGEX.test(res))  // integer/double regex
+            return parseFloat(res);
         else
             throw new TypeError('Not a number');
     };
-
-    /**
-     * Returns the current character to be read in the buffer, otherwise null if all characters have been read in the buffer
-     * @returns {?string} the current character to be read in the buffer, otherwise null if all characters have been read in the buffer
-     * @private
-     */
-    const read = (): string | null => {
-        if (!buffer.length) // prevent crashing when a method is called from a Scanner that is instantiated with an empty array e.g. scanner([]).next()
-            return null;
-        let EOF = bufferIndex === buffer.length - 1 && bufferPointer === buffer[bufferIndex].length;
-        while (bufferPointer < 0) { // bufferPointer can be negative due to the subtraction in `nextNumber(retainElement)` and `next()`
-            bufferIndex--;
-            bufferPointer += buffer[bufferIndex].length;
-        }
-        if (!EOF && bufferPointer === buffer[bufferIndex].length) {
-            bufferIndex++;
-            bufferPointer = 0;
-            EOF = bufferIndex === buffer.length - 1 && bufferPointer === buffer[bufferIndex].length;
-        }
-        if (EOF)
-            return null;
-        return buffer[bufferIndex][bufferPointer++];
-    };
-
-    /**
-     * Determines whether the character is whitespace
-     * @param {?string} cur the single character to check
-     * @returns true if the given character is whitespace, false otherwise
-     * @private
-     */
-    const isWhitespace = (cur: string | null): boolean => cur === ' ' || cur == '\n' || cur == '\r';
 
     return {
         /** 
@@ -138,7 +91,7 @@ const scanner = (source: string | string[]) => {
          * @public
          */
         next(): string | null {
-            return next().value;
+            return next(false);
         },
         /**
          * Determines whether a non-whitespace element separated by whitespace exists in the buffer
@@ -146,9 +99,8 @@ const scanner = (source: string | string[]) => {
          * @public
          */
         hasNext(): boolean {
-            const obj = next();
-            bufferPointer -= obj.charactersRead; // reset position of buffer due to only checking if it exists
-            return typeof obj.value === 'string';
+            const obj = next(true);
+            return typeof obj === 'string';
         },
         /**
          * Obtains the remaining parts of a line. If {@link next} or {@link nextNumber} is used to capture the last element of a line,
@@ -173,7 +125,7 @@ const scanner = (source: string | string[]) => {
          * var line = input.nextLine(); // correctly gets the next line (has the value "happy birthday")
          */
         nextLine(): string | null {
-            return nextLine().value;
+            return nextLine(false);
         },
         /**
          * Determines whether there are lines available in the buffer
@@ -181,9 +133,8 @@ const scanner = (source: string | string[]) => {
          * @public
          */
         hasNextLine(): boolean {
-            const obj = nextLine();
-            bufferPointer -= obj.charactersRead; // reset position of buffer due to only checking if it exists
-            return typeof obj.value === 'string';
+            const obj = nextLine(true);
+            return typeof obj === 'string';
         },
         /**
          * Obtains the next non-whitespace element separated by whitespace in the buffer as a number
