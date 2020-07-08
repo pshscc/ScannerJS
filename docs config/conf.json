@@ -7,12 +7,12 @@
     ],
     "source": {
         "include": [
-            "./doc config/README.md"
+            "./docs config/README.md"
         ]
     },
     "opts": {
         "template": "node_modules/docdash",
-        "destination": "./doc"
+        "destination": "./docs"
     },
     "markdown": {
         "parser": "gfm",

@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "tsc",
     "compile:rc": "tsc --removeComments",
-    "doc": "npm run compile && jsdoc scanner.js -c \"./doc config/conf.json\"",
+    "docs": "npm run compile && jsdoc scanner.js -c \"./docs config/conf.json\"",
     "test": "mocha tests/runner.js --reporter=progress"
   },
   "repository": {
