@@ -1,5 +1,5 @@
 # ScannerJS
-This was created to replicate basic functionality of the [Scanner](https://docs.oracle.com/javase/10/docs/api/java/util/Scanner.html) class in Java and be used in PSHS's annual coding scimmage for beginners.
+A basic string parser based on the [Scanner](https://docs.oracle.com/javase/10/docs/api/java/util/Scanner.html) class in Java. Built for PSHS's annual coding scrimmage for beginners.
 
 ## Prequisites
 - [Node.js](https://nodejs.org/en/)
