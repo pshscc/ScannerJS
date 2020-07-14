@@ -26,4 +26,4 @@ npm run <name of script>
 | `test` | Runs the tests for `scanner.js`. |
 
 ## Documentation
-All documentation is located in the generated `./docs` folder and can also be found [here](https://pshscc.github.io/scannerjs/docs).
+All documentation is located in the generated `./docs` folder and can also be found [here](https://pshscc.github.io/scannerjs/).
