@@ -69,7 +69,8 @@
  * @throws {TypeError} Will throw an error if the given source is not of type Array.&amp;lt;string&amp;gt; or string
  */
 const scanner = (source) => {
-    const NUMBER_REGEX = /^(\+|-)?\d+((\.\d+)?(e(\+|-)\d+)?)?$|^(\+|-)?\.\d+(e(\+|-)\d+)?$/i;
+    const INTEGER_REGEX = /^(\+|-)?\d+((\.\d+)?(e(\+|-)\d+)?)?$/i;
+    const NO_INTEGER_REGEX = /^(\+|-)?\.\d+(e(\+|-)\d+)?$/i;
     let buffer;
     if (typeof source === 'string') {
         buffer = source;
@@ -129,7 +130,7 @@ const scanner = (source) => {
      */
     const nextNumber = (retainElement) => {
         const res = next(retainElement);
-        if (typeof res === 'string' &amp;&amp; NUMBER_REGEX.test(res)) // integer/double regex
+        if (typeof res === 'string' &amp;&amp; (INTEGER_REGEX.test(res) || NO_INTEGER_REGEX.test(res))) // integer/double regex
             return parseFloat(res);
         else
             throw new TypeError('Not a number');
